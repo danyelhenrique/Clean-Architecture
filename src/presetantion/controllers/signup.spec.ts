@@ -1,16 +1,15 @@
 import { SignUpController } from "./signup"
-import { MissingParamError } from "../erros/missingParamError"
-import { InvalidParamError } from "../erros/invalidParamError"
-import { EmailValidador } from "../protocols/emaiValidator"
-import { ServerError } from "../erros/serverError"
+
+import { IEmailValidador } from "../protocols/IEmaiValidator"
+import { MissingParamError, InvalidParamError, ServerError } from "../erros"
 
 interface ISutReturn {
 	sut: SignUpController
-	emailValidatorStub: EmailValidador
+	emailValidatorStub: IEmailValidador
 }
 //factory to  make sut
 const makeSut = (): ISutReturn => {
-	class EmailValidatorStub implements EmailValidador {
+	class EmailValidatorStub implements IEmailValidador {
 		isValid(email: string): boolean {
 			return true
 		}
@@ -125,7 +124,7 @@ describe("SignUp Controller", () => {
 	})
 
 	test("Should return 500 if EmailValidator Throws", () => {
-		class EmailValidatorStub implements EmailValidador {
+		class EmailValidatorStub implements IEmailValidador {
 			isValid(email: string): boolean {
 				throw new Error("")
 			}

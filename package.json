@@ -30,7 +30,11 @@
 		"typescript": "^3.9.7"
 	},
 	"scripts": {
-		"test": "jest --passWithNoTests --watch",
-		"test:staged": "jest --passWithNoTests"
+		"test": "jest --passWithNoTests --silent --noStackTrace",
+		"test:verbose": "jest --passWithNoTests --runInBand",
+		"test:unit": "npm test -- --watch -c jest-unit-config.js",
+		"test:integration": "npm test -- --watch --runInBand -c jest-inegration-config.js",
+		"test:staged": "npm test -- --findRelatedTests",
+		"test:ci": "npm test -- --coverage --runInBand"
 	}
 }

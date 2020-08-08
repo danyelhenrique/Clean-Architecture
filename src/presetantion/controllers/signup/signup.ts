@@ -5,7 +5,7 @@ import {
 	HttpRequest,
 	HttpResponse,
 } from "./signupProtocols"
-import { badRequest, serverError } from "../../helpers/httpHelper"
+import { badRequest, serverError, success } from "../../helpers/httpHelper"
 import { MissingParamError, InvalidParamError } from "../../erros"
 
 export class SignUpController implements IController {
@@ -53,10 +53,7 @@ export class SignUpController implements IController {
 				password,
 			})
 
-			return {
-				statusCode: 200,
-				body: account,
-			}
+			return success(account)
 		} catch {
 			return serverError()
 		}

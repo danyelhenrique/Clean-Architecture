@@ -23,7 +23,7 @@ const makeSut = (): IMakeSutReturn => {
 	}
 }
 
-describe("Bcrypt Adaper", () => [
+describe("Bcrypt Adaper", () => {
 	test("Should call bcrypt with correct values", async () => {
 		const { sut, salt } = makeSut()
 		const hasSpy = jest.spyOn(bcrypt, "hash")
@@ -32,21 +32,21 @@ describe("Bcrypt Adaper", () => [
 		expect(hasSpy).toHaveBeenCalledWith("any_value", salt)
 	}),
 
-	test("Should return a hash on success", async () => {
-		const { sut } = makeSut()
+		test("Should return a hash on success", async () => {
+			const { sut } = makeSut()
 
-		const hashsPassword = await sut.encrypt("any_value")
-		expect(hashsPassword).toBe("hash")
-	}),
+			const hashsPassword = await sut.encrypt("any_value")
+			expect(hashsPassword).toBe("hash")
+		}),
 
-	test("Should throw if bcrypt throws", async () => {
-		const { sut } = makeSut()
+		test("Should throw if bcrypt throws", async () => {
+			const { sut } = makeSut()
 
-		jest.spyOn(bcrypt, "hash").mockReturnValueOnce(
-			Promise.reject(new Error())
-		)
+			jest.spyOn(bcrypt, "hash").mockReturnValueOnce(
+				Promise.reject(new Error())
+			)
 
-		const hashsPasswordPromise = sut.encrypt("any_value")
-		await expect(hashsPasswordPromise).rejects.toThrow()
-	}),
-])
+			const hashsPasswordPromise = sut.encrypt("any_value")
+			await expect(hashsPasswordPromise).rejects.toThrow()
+		}),
+})

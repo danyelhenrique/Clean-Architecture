@@ -16,10 +16,11 @@ export class DbAddAccount implements IAddAccount {
 		const passwordHashed = await this.encrypter.encrypt(
 			accountData.password
 		)
-		await this.addAccountRepository.add({
+		const account = await this.addAccountRepository.add({
 			...accountData,
 			password: passwordHashed,
 		})
-		return Promise.resolve(null)
+
+		return account
 	}
 }

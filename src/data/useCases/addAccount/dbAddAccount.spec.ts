@@ -1,5 +1,5 @@
 import { DbAddAccount } from "./dbAddAccount"
-import { IEncrypter } from "../../protocols/encrypter"
+import { IEncrypter } from "./dbAddAccountProtocols"
 
 interface ISutReturn {
 	sut: DbAddAccount

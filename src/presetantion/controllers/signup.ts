@@ -8,8 +8,14 @@ import {
 	HttpResponse,
 } from "../protocols"
 
+import { IAddAccount } from "../../domain/useCases/IAddAccount"
+
 export class SignUpController implements IController {
-	constructor(private readonly emailValidator: IEmailValidador) {}
+	constructor(
+		private readonly emailValidator: IEmailValidador,
+		private readonly addAccount: IAddAccount
+	) {}
+
 	handle(httpRequest: HttpRequest): HttpResponse {
 		const requiredFields = [
 			"name",
@@ -28,7 +34,7 @@ export class SignUpController implements IController {
 			const {
 				email,
 				password,
-				body,
+				name,
 				password_confirmation,
 			} = httpRequest.body
 
@@ -42,6 +48,12 @@ export class SignUpController implements IController {
 			if (!isValid) {
 				return badRequest(new InvalidParamError("email"))
 			}
+
+			this.addAccount.add({
+				email,
+				name,
+				password,
+			})
 		} catch {
 			return serverError()
 		}

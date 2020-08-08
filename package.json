@@ -5,10 +5,12 @@
 	"author": "danyelhenrique <danyelhenriquefidel@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
+		"bcrypt": "^5.0.0",
 		"git-commit-msg-linter": "^2.4.4",
 		"validator": "^13.1.1"
 	},
 	"devDependencies": {
+		"@types/bcrypt": "^3.0.0",
 		"@types/jest": "^26.0.9",
 		"@types/node": "^14.0.27",
 		"@types/validator": "^13.1.0",

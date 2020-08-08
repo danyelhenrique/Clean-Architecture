@@ -28,8 +28,8 @@ const makeaddAccountRepository = (): IAddAccountRepository => {
 		async add(accountData: IAddAccountModel): Promise<IAccountModel> {
 			const fakeAccount: IAccountModel = {
 				id: "valid_id",
-				email: "valid_name",
-				name: "valid_email",
+				email: "valid_email",
+				name: "valid_name",
 				password: "hashed_password",
 			}
 
@@ -107,7 +107,7 @@ describe("DbAddAccount UseCase", () => {
 		})
 	})
 
-	test("Should throw if AddAccountRepositorie throws", async () => {
+	test("Should throw if AddAccountRepository throws", async () => {
 		const { addAccountRepositoryStub, sut } = makeSut()
 
 		jest.spyOn(addAccountRepositoryStub, "add").mockResolvedValueOnce(
@@ -123,5 +123,24 @@ describe("DbAddAccount UseCase", () => {
 		const accountPromise = sut.add(accoutnData)
 
 		await expect(accountPromise).rejects.toThrow()
+	})
+
+	test("Should return an account on succes", async () => {
+		const { sut } = makeSut()
+
+		const accoutnData = {
+			name: "valid_name",
+			email: "valid_name@email.com",
+			password: "valid_password",
+		}
+
+		const account = await sut.add(accoutnData)
+
+		expect(account).toEqual({
+			id: "valid_id",
+			name: "valid_name",
+			email: "valid_email",
+			password: "hashed_password",
+		})
 	})
 })

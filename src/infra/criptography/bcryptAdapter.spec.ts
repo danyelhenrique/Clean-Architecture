@@ -38,4 +38,15 @@ describe("Bcrypt Adaper", () => [
 		const hashsPassword = await sut.encrypt("any_value")
 		expect(hashsPassword).toBe("hash")
 	}),
+
+	test("Should throw if bcrypt throws", async () => {
+		const { sut } = makeSut()
+
+		jest.spyOn(bcrypt, "hash").mockReturnValueOnce(
+			Promise.reject(new Error())
+		)
+
+		const hashsPasswordPromise = sut.encrypt("any_value")
+		await expect(hashsPasswordPromise).rejects.toThrow()
+	}),
 ])

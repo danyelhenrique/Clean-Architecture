@@ -2,6 +2,7 @@ import { SignUpController } from "./signup"
 
 import { IEmailValidador } from "../protocols"
 import { MissingParamError, InvalidParamError, ServerError } from "../erros"
+import { throws } from "assert"
 
 interface ISutReturn {
 	sut: SignUpController
@@ -18,15 +19,6 @@ const makeEmailValidator = (): IEmailValidador => {
 	return new EmailValidatorStub()
 }
 
-const makeEmailValidatorWithError = (): IEmailValidador => {
-	class EmailValidatorStub implements IEmailValidador {
-		isValid(email: string): boolean {
-			throw new Error("")
-		}
-	}
-
-	return new EmailValidatorStub()
-}
 //factory to  make sut
 const makeSut = (): ISutReturn => {
 	const emailValidatorStub = makeEmailValidator()
@@ -138,9 +130,11 @@ describe("SignUp Controller", () => {
 	})
 
 	test("Should return 500 if EmailValidator Throws", () => {
-		const emailValidatorStub = makeEmailValidatorWithError()
-		const sut = new SignUpController(emailValidatorStub)
+		const { sut, emailValidatorStub } = makeSut()
 
+		jest.spyOn(emailValidatorStub, "isValid").mockImplementationOnce(() => {
+			throw new Error()
+		})
 		const httpRequest = {
 			body: {
 				email: "any_email@email.com",

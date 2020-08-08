@@ -18,6 +18,11 @@ class MongoHelper {
 	getCollection(name: string): Collection {
 		return this.client.db().collection(name)
 	}
+
+	map(collection: any): any {
+		const { _id, ...collectionWithoudId } = collection
+		return { ...collectionWithoudId, id: _id }
+	}
 }
 
 export default new MongoHelper()

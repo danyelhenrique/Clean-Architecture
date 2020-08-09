@@ -5,7 +5,7 @@ import { BcryptAdater } from "../../infra/criptography/bcryptAdapter"
 import { AccountMongoRepository } from "../../infra/db/mongoDb/accountRepository/account"
 
 export class MakeSignUpController {
-	static createFactory(): SignUpController {
+	static get createFactory(): SignUpController {
 		const emailValidatorAdapter = new EmailValidatorAdapter()
 
 		const bcryptAdater = new BcryptAdater({ salt: 12 })

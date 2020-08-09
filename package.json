@@ -5,7 +5,9 @@
 	"author": "danyelhenrique <danyelhenriquefidel@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
+		"@types/express": "^4.17.7",
 		"bcrypt": "^5.0.0",
+		"express": "^4.17.1",
 		"git-commit-msg-linter": "^2.4.4",
 		"mongodb": "^3.6.0",
 		"validator": "^13.1.1"
@@ -33,10 +35,12 @@
 		"prettier-eslint": "^11.0.0",
 		"stylelint-config-prettier": "^8.0.2",
 		"stylelint-prettier": "^1.1.2",
+		"sucrase": "^3.15.0",
 		"ts-jest": "^26.1.4",
 		"typescript": "^3.9.7"
 	},
 	"scripts": {
+		"dev": "sucrase-node src/main/server.ts",
 		"test": "jest --passWithNoTests --silent --noStackTrace",
 		"test:verbose": "jest --passWithNoTests --runInBand",
 		"test:unit": "npm test -- --watch -c jest-unit-config.js",

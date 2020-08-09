@@ -31,14 +31,12 @@ describe("Bcrypt Adaper", () => {
 		await sut.encrypt("any_value")
 		expect(hasSpy).toHaveBeenCalledWith("any_value", salt)
 	}),
-
 		test("Should return a hash on success", async () => {
 			const { sut } = makeSut()
 
 			const hashsPassword = await sut.encrypt("any_value")
 			expect(hashsPassword).toBe("hash")
 		}),
-
 		test("Should throw if bcrypt throws", async () => {
 			const { sut } = makeSut()
 
@@ -48,5 +46,5 @@ describe("Bcrypt Adaper", () => {
 
 			const hashsPasswordPromise = sut.encrypt("any_value")
 			await expect(hashsPasswordPromise).rejects.toThrow()
-		}),
+		})
 })

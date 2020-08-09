@@ -9,6 +9,7 @@
 		"bcrypt": "^5.0.0",
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
+		"fast-glob": "^3.2.4",
 		"git-commit-msg-linter": "^2.4.4",
 		"mongodb": "^3.6.0",
 		"validator": "^13.1.1"

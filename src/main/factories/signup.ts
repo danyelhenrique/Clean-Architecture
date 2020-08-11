@@ -4,6 +4,7 @@ import { DbAddAccount } from "../../data/useCases/addAccount/dbAddAccount"
 import { BcryptAdater } from "../../infra/criptography/bcryptAdapter"
 import { AccountMongoRepository } from "../../infra/db/mongoDb/accountRepository/account"
 import { IController } from "../../presetantion/protocols"
+import { LogMongoRepository } from "../../infra/db/mongoDb/logRepository/log"
 import { LogControllerDecorator } from "../decorators/log"
 
 export class MakeSignUpController {
@@ -23,7 +24,8 @@ export class MakeSignUpController {
 			emailValidatorAdapter,
 			dbAddAccount
 		)
+		const logMongoRepository = new LogMongoRepository()
 
-		return new LogControllerDecorator(signUpController)
+		return new LogControllerDecorator(signUpController, logMongoRepository)
 	}
 }

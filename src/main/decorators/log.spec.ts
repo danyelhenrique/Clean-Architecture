@@ -50,20 +50,36 @@ const makeLogErrorRepository = (): ILogErrorRepository => {
 	}
 	return new LogErrorRepositoryStub()
 }
+
+const makeHttpRequest = (): HttpRequest => {
+	const httpRequest = {
+		body: {
+			email: "any_email@email.com",
+			name: "any_name",
+			password: "any_password",
+			password_confirmation: "any_password",
+		},
+	}
+
+	return httpRequest
+}
+
+const makeFakeServerError = (): HttpResponse => {
+	const fakeError = new Error()
+
+	fakeError.stack = "any_stack_error"
+
+	const error = serverError(fakeError)
+
+	return error
+}
 describe("LogController Decorator", () => {
 	test("Should call controller handle", async () => {
 		const { sut, controllerStub } = makeSut()
 
 		const handleSpy = jest.spyOn(controllerStub, "handle")
 
-		const httRequest = {
-			body: {
-				email: "valid_email",
-				name: "valid_name",
-				password: "valid_password",
-				password_confirmation: "valid_password",
-			},
-		}
+		const httRequest = makeHttpRequest()
 
 		await sut.handle(httRequest)
 		expect(handleSpy).toHaveBeenCalledWith(httRequest)
@@ -72,14 +88,7 @@ describe("LogController Decorator", () => {
 	test("Should return the same result of then controller", async () => {
 		const { sut } = makeSut()
 
-		const httRequest = {
-			body: {
-				email: "valid_email",
-				name: "valid_name",
-				password: "valid_password",
-				password_confirmation: "valid_password",
-			},
-		}
+		const httRequest = makeHttpRequest()
 
 		const httpResponse = await sut.handle(httRequest)
 
@@ -93,26 +102,14 @@ describe("LogController Decorator", () => {
 
 	test("Should call logErrorRepository with correct error if controller returns a server", async () => {
 		const { sut, controllerStub, logErrorRepositoryStub } = makeSut()
-		const fakeError = new Error()
-
-		fakeError.stack = "any_stack_error"
-
-		const error = serverError(fakeError)
 
 		const logSpy = jest.spyOn(logErrorRepositoryStub, "log")
 
 		jest.spyOn(controllerStub, "handle").mockReturnValueOnce(
-			Promise.resolve(error)
+			Promise.resolve(makeFakeServerError())
 		)
 
-		const httRequest = {
-			body: {
-				email: "valid_email",
-				name: "valid_name",
-				password: "valid_password",
-				password_confirmation: "valid_password",
-			},
-		}
+		const httRequest = makeHttpRequest()
 
 		await sut.handle(httRequest)
 

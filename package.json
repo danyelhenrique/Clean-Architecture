@@ -32,7 +32,7 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
-		"husk": "^0.5.3",
+		"husky": "^4.2.5",
 		"jest": "^26.2.2",
 		"lint-staged": "^10.2.11",
 		"prettier": "^2.0.5",
@@ -46,11 +46,11 @@
 	},
 	"scripts": {
 		"dev": "sucrase-node src/main/server.ts",
-		"test": "jest --passWithNoTests --silent --noStackTrace",
+		"test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
 		"test:verbose": "jest --passWithNoTests --runInBand",
 		"test:unit": "npm test -- --watch -c jest-unit-config.js",
-		"test:integration": "npm test -- --watch --runInBand -c jest-integration-config.js",
+		"test:integration": "npm test -- --watch -c jest-integration-config.js",
 		"test:staged": "npm test -- --findRelatedTests",
-		"test:ci": "npm test -- --coverage --runInBand"
+		"test:ci": "npm test -- --coverage"
 	}
 }
